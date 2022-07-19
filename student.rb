@@ -1,15 +1,17 @@
-require './person.rb'
+require './person'
 
 class Student < Person
-    def initialize(classroom, age, name = 'Unknown', parent_permission: true)
-        super(age, name, parent_permission)
-        @classroom = calssroom
-    end
+  def initialize(classroom, age, name = 'Unknown')
+    super(age, name)
+    @classroom = classroom
+  end
 
-    def play_hooky
-        "¯\(ツ)/¯"
-    end
-
+  def play_hooky
+    "¯\(ツ)/¯"
+  end
 end
 
-student_1 = Student.new(8, 11, "Carl")
+student1 = Student.new(8, 11, 'Carl')
+puts student1.can_use_services?
+puts student1.play_hooky
+puts student1.name
