@@ -6,7 +6,7 @@ require './rental'
 class App
   def list_books
     if @books.length.zero?
-      puts "There are no books, Please add a book first"
+      puts 'There are no books, Please add a book first'
     else
       @books.each_with_index do |book, index|
         puts "#{index + 1} - Book title: #{book.title}, Book author: #{book.author}"
@@ -16,7 +16,7 @@ class App
 
   def list_persons
     if @persons.length.zero?
-      puts "There are no people, Please add a person first"
+      puts 'There are no people, Please add a person first'
     else
       @persons.each_with_index do |person, index|
         if person.is_a?(Teacher)
@@ -62,11 +62,11 @@ class App
     name = gets.chomp
     print 'Specialization: '
     specialization = gets.chomp
-    if(name.strip.length > 0 && age.strip.length > 0 && specialization.strip.length > 0)
-        Teacher.new(specialization, age, name)
+    if name.strip.length.positive? && age.strip.length.positive? && specialization.strip.length.positive?
+      Teacher.new(specialization, age, name)
     else
-        puts 'Please dont leave any empty spaces'
-        create_teacher
+      puts 'Please dont leave any empty spaces'
+      create_teacher
     end
   end
 
@@ -77,30 +77,30 @@ class App
     name = gets.chomp
     print 'Parent permission [y/n]: '
     permission = gets.chomp
-    if(name.strip.length > 0 && age.strip.length > 0 && permission.strip.length > 0)
-        case permission
-        when 'y'
-          Student.new(age, name)
-        when 'n'
-          Student.new(age, name, parent_permission: false)
-        else
-          puts 'Please select a correct option'
-          create_student
-        end
-    else
-        puts 'Please dont leave any empty spaces'
+    if name.strip.length.positive? && age.strip.length.positive? && permission.strip.length.positive?
+      case permission
+      when 'y'
+        Student.new(age, name)
+      when 'n'
+        Student.new(age, name, parent_permission: false)
+      else
+        puts 'Please select a correct option'
         create_student
+      end
+    else
+      puts 'Please dont leave any empty spaces'
+      create_student
     end
   end
 
   def create_person
-    print "Do you want to create a student (1) or a teacher (2)? [Input the number]: "
+    print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     option = gets.chomp.to_i
     case option
     when 1
-        @persons.push(create_student)
+      @persons.push(create_student)
     when 2
-        @persons.push(create_teacher)
+      @persons.push(create_teacher)
     else
       puts 'Please select a correct option'
       create_person
@@ -133,40 +133,9 @@ class App
     book: #{@books[book_index - 1].title}, Person: #{@persons[person_index - 1].name}, Date: #{date}"
   end
 
-  def handle_input(option)
-    case option
-    when 1
-      list_books
-    when 2
-      list_persons
-    when 3
-      create_person
-    when 4
-      create_book
-    when 5
-      create_rental
-    when 6
-      list_rentals
-    when 7
-      puts 'Thank you for using this app'
-      exit
-    else puts 'Please select a valid option'
-         print_message
-    end
-  end
-
-  def print_message
-    puts "\nPlease choose an option by entring a number:\n1 - List all books\n2 - List all people
-3 - Create a person\n4 - Create a book\n5 - Create a rental\n6 - List all rentals for a given person id\n7 - Exit"
-    option = gets.chomp.to_i
-    handle_input(option)
-    print_message
-  end
-
   def run
     @books = []
     @persons = []
     puts 'Welcome to School Library App!'
-    print_message
   end
 end
