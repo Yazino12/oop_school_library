@@ -2,6 +2,7 @@ require './student'
 require './teacher'
 require './book'
 require './rental'
+require 'pry'
 
 class App
   def list_books
@@ -36,21 +37,24 @@ class App
   end
 
   def list_rentals
-    puts 'Select a person by ID: '
-    list_persons
-    print_message if @persons.length.zero?
-    id = gets.chomp.to_i
-    person = person_object(id)
-    if person.nil?
-      puts 'Wrong input, Please type correct ID'
-      return
-    end
-    rentals = person.rentals
-    if rentals.length.zero?
-      puts 'No rentals for this person, Please add a rental first'
+    if @persons.length.zero?
+      puts 'No registered people, Register your self!'
     else
-      rentals.each_with_index do |rent, index|
-        puts "#{index + 1} - Date: #{rent.date}, Book: #{rent.book.title} by #{rent.person.name}"
+      list_persons
+      puts 'Select a person by ID: '
+      id = gets.chomp.to_i
+      person = person_object(id)
+      if person.nil?
+        puts 'Wrong input, Please type correct ID'
+        return
+      end
+      rentals = person.rentals
+      if rentals.length.zero?
+        puts 'No rentals for this person, Please add a rental first'
+      else
+        rentals.each_with_index do |rent, index|
+          puts "#{index + 1} - Date: #{rent.date}, Book: #{rent.book.title} by #{rent.person.name}"
+        end
       end
     end
   end
@@ -118,19 +122,23 @@ class App
   end
 
   def create_rental
-    puts 'Select a book by number '
-    list_books
-    print_message if @books.length.zero?
-    book_index = gets.chomp.to_i
-    puts 'Select a person by number: '
-    list_persons
-    print_message if @persons.length.zero?
-    person_index = gets.chomp.to_i
-    print 'Enter date: '
-    date = gets.chomp
-    Rental.new(date, @persons[person_index - 1], @books[book_index - 1])
-    puts "Rental created succesfully -
-    book: #{@books[book_index - 1].title}, Person: #{@persons[person_index - 1].name}, Date: #{date}"
+    if @books.length.zero?
+      puts 'No books available, Add a book!'
+    elsif @persons.length.zero?
+      puts "No people registered, Register one!"
+    else
+      list_books
+      puts 'Select a book by number '
+      book_index = gets.chomp.to_i
+      puts 'Select a person by number: '
+      list_persons
+      person_index = gets.chomp.to_i
+      print 'Enter date: '
+      date = gets.chomp
+      Rental.new(date, @persons[person_index - 1], @books[book_index - 1])
+      puts "Rental created succesfully -
+      book: #{@books[book_index - 1].title}, Person: #{@persons[person_index - 1].name}, Date: #{date}"
+    end
   end
 
   def run
