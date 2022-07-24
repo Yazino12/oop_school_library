@@ -24,8 +24,8 @@ To get a local copy up and running follow these simple example steps.
   `cd oop_school_library`
 
 **To Start the programs**
-`open terminal`
-`run ruby "file-name".rb`
+- `open terminal`
+- `run ruby "file-name".rb`
 
 ## Authors
 
