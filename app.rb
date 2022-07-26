@@ -1,6 +1,6 @@
 require './generate_books'
 require './generate_people'
-require 'generate_rentals'
+require './generate_rentals'
 
 class App
   attr_reader :books_class, :people_class, :rentals_class

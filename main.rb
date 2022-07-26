@@ -6,7 +6,6 @@ class Main
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
-
   def handle_input(option)
     case option
     when 1
