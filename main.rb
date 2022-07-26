@@ -1,8 +1,6 @@
 require './app'
 
 class Main
-  attr_reader :app
-
   def initialize
     @app = App.new
   end
@@ -11,17 +9,17 @@ class Main
   def handle_input(option)
     case option
     when 1
-      app.list_books
+      @app.books_class.list_books
     when 2
-      app.list_persons
+      @app.people_class.list_persons
     when 3
-      app.create_person
+      @app.people_class.create_person
     when 4
-      app.create_book
+      @app.books_class.create_book
     when 5
-      app.create_rental
+      @app.rentals_class.create_rental
     when 6
-      app.list_rentals
+      @app.rentals_class.list_rentals
     when 7
       puts 'Thank you for using this app'
       exit
@@ -40,7 +38,7 @@ class Main
   end
 
   def main
-    app.run
+    puts 'Welcome to School Library App!'
     print_message
   end
 end
