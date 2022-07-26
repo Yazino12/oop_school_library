@@ -6,12 +6,13 @@ Imagine that you are the librarian of OOP University, and you need a tool to rec
 
 - Major languages (Ruby)
 
-**Getting Started**
-To get a local copy up and running follow these simple example steps.
-
 **Prerequisites**
 
 - A text editor(preferably Visual Studio Code)
+
+**Getting Started**
+
+- To get a local copy up and running follow these simple example steps.
 
 **Install**
 
