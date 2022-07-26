@@ -1,27 +1,20 @@
 require './app'
 
 class Main
-  attr_reader :app
-
   def initialize
     @app = App.new
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def handle_input(option)
     case option
     when 1
-      app.list_books
+      @app.books_class.list_books
     when 2
-      app.list_persons
+      @app.people_class.list_persons
     when 3
-      app.create_person
+      @app.people_class.create_person
     when 4
-      app.create_book
-    when 5
-      app.create_rental
-    when 6
-      app.list_rentals
+      @app.books_class.create_book
     when 7
       puts 'Thank you for using this app'
       exit
@@ -29,7 +22,6 @@ class Main
          print_message
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
 
   def print_message
     puts "\nPlease choose an option by entring a number:\n1 - List all books\n2 - List all people
@@ -40,7 +32,7 @@ class Main
   end
 
   def main
-    app.run
+    puts 'Welcome to School Library App!'
     print_message
   end
 end
