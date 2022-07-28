@@ -9,6 +9,31 @@ class GeneratePeople
     @persons = DataValues.persons
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  def fetch_people
+    # Get data from the file
+    return unless File.exist?('people.json')
+
+    people_data = File.read('people.json')
+    return unless people_data.length.positive?
+
+    data = JSON.parse(people_data)
+    data.each_with_index do |person, _index|
+      case person['json_class']
+      when 'Student'
+        case person['parent_permission']
+        when true
+          @persons.push(Student.new(person['age'], person['name']))
+        when false
+          @persons.push(Student.new(person['age'], person['name'], person['parent_permission']))
+        end
+      when 'Teacher'
+        @persons.push(Teacher.new(person['specialization'], person['age'], person['name']))
+      end
+    end
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+
   def list_persons
     if @persons.length.zero?
       puts 'There are no people, Please add a person first'
@@ -74,5 +99,23 @@ class GeneratePeople
       create_person
     end
     puts 'Person created successfully!'
+  end
+
+  def save_people
+    # Preserve data in the file
+    people_content = []
+    @persons.each do |person|
+      case person
+      when Teacher
+        opt1 = { 'json_class' => 'Teacher', 'id' => person.id, 'name' => person.name, 'age' => person.age,
+                 'specialization' => person.specialization }
+        people_content.push(opt1)
+      when Student
+        opt2 = { 'json_class' => 'Student', 'id' => person.id, 'name' => person.name, 'age' => person.age,
+                 'parent_permission' => person.parent_permission }
+        people_content.push(opt2)
+      end
+    end
+    File.write('people.json', JSON.generate(people_content))
   end
 end

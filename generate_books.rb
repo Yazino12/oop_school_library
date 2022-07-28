@@ -32,8 +32,6 @@ class GenerateBooks
   end
 
   def list_books
-    fetch_books if @books.length.zero?
-
     if @books.length.positive?
       @books.each_with_index do |book, index|
         puts "#{index + 1} - Book title: #{book.title}, Book author: #{book.author}"

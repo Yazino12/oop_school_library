@@ -10,4 +10,10 @@ class App
     @people_class = GeneratePeople.new
     @rentals_class = GenerateRentals.new
   end
+
+  def fetch_data
+    @books_class.fetch_books
+    @people_class.fetch_people
+    @rentals_class.fetch_rentals
+  end
 end

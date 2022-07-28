@@ -5,6 +5,12 @@ class Main
     @app = App.new
   end
 
+  def save_and_close
+    @app.books_class.save_books
+    @app.people_class.save_people
+    @app.rentals_class.save_rentals
+  end
+
   # rubocop:disable Metrics/CyclomaticComplexity
   def handle_input(option)
     case option
@@ -21,7 +27,7 @@ class Main
     when 6
       @app.rentals_class.list_rentals
     when 7
-      @app.books_class.save_books
+      save_and_close
       puts 'Thank you for using this app'
       exit
     else puts 'Please select a valid option'
@@ -39,6 +45,7 @@ class Main
   end
 
   def main
+    @app.fetch_data
     puts 'Welcome to School Library App!'
     print_message
   end
