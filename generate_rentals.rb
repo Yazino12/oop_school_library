@@ -1,6 +1,5 @@
 require './rental'
 require './data_values'
-
 class GenerateRentals
   include DataValues
   attr_reader :people_generator, :books_generator
@@ -12,6 +11,29 @@ class GenerateRentals
     @books_generator = GenerateBooks.new
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  def fetch_rentals
+    # Get data from the file
+    return unless File.exist?('rentals.json')
+
+    rental_data = File.read('rentals.json')
+    return unless rental_data.length.positive?
+
+    data = JSON.parse(rental_data)
+    data.each_with_index do |rental, _index|
+      recovered_person = ''
+      recovered_book = ''
+      @persons.each do |person|
+        recovered_person = person if person.id == rental['person_id']
+      end
+      @books.each do |book|
+        recovered_book = book if book.title == rental['book_title']
+      end
+      Rental.new(rental['date'], recovered_person, recovered_book)
+    end
+  end
+
+  # rubocop:enable Metrics/CyclomaticComplexity
   def person_object(id)
     @persons.each do |person|
       return person if person.id == id
@@ -60,5 +82,31 @@ class GenerateRentals
       puts "Rental created succesfully -
         book: #{@books[book_index - 1].title}, Person: #{@persons[person_index - 1].name}, Date: #{date}"
     end
+  end
+
+  def save_rentals
+    # Preserve data in the file
+    rentals = []
+    rental_content = []
+    @persons.each do |person|
+      rental_content.push(person) if person.rentals
+    end
+    return unless rental_content.length.positive?
+
+    rental_content.each do |rental|
+      date = ''
+      person = ''
+      book = ''
+      rental.rentals.each do |item|
+        break unless item.is_a?(Rental)
+
+        date = item.date
+        person = item.person.id
+        book = item.book.title
+        rentals.push({ 'json_class' => self.class.name,
+                       'date' => date, 'person_id' => person, 'book_title' => book })
+      end
+    end
+    File.write('rentals.json', JSON.generate(rentals))
   end
 end
