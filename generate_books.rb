@@ -11,14 +11,14 @@ class GenerateBooks
 
   def fetch_books
     # Get data from the file
-    if(File.exists?('books.json'))
-      book_data = File.read('books.json')
-      if book_data.length.positive?
-        data = JSON.parse(book_data)
-        data.each_with_index do |book, index|
-          @books.push(Book.new(book["title"], book["author"]))
-        end
-      end
+    return unless File.exist?('books.json')
+
+    book_data = File.read('books.json')
+    return unless book_data.length.positive?
+
+    data = JSON.parse(book_data)
+    data.each_with_index do |book, _index|
+      @books.push(Book.new(book['title'], book['author']))
     end
   end
 
@@ -32,7 +32,7 @@ class GenerateBooks
   end
 
   def list_books
-    fetch_books if @books.length == 0
+    fetch_books if @books.length.zero?
 
     if @books.length.positive?
       @books.each_with_index do |book, index|
