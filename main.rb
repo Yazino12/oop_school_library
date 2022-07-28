@@ -21,6 +21,7 @@ class Main
     when 6
       @app.rentals_class.list_rentals
     when 7
+      @app.books_class.save_books
       puts 'Thank you for using this app'
       exit
     else puts 'Please select a valid option'
