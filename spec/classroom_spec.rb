@@ -1,4 +1,4 @@
-require './spec_helper'
+require_relative './spec_helper'
 
 describe Classroom do
   context 'When testing the Classroom class' do

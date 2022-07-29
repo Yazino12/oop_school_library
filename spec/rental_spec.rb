@@ -1,4 +1,4 @@
-require './spec_helper'
+require_relative './spec_helper'
 
 describe Rental do
   context 'When testing the Rental class' do

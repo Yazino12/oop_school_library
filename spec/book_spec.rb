@@ -1,4 +1,4 @@
-require './spec_helper'
+require_relative './spec_helper'
 
 describe Book do
   context 'When testing the Book class' do

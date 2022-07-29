@@ -1,4 +1,4 @@
-require './spec_helper'
+require_relative './spec_helper'
 
 describe CapitalizeDecorator do
   context 'When testing the CapitalizeDecorator class' do
