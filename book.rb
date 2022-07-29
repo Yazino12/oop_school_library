@@ -1,4 +1,4 @@
-require './rental'
+require_relative './rental'
 
 class Book
   attr_reader :rentals

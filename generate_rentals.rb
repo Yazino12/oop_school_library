@@ -1,5 +1,6 @@
 require './rental'
 require './data_values'
+
 class GenerateRentals
   include DataValues
   attr_reader :people_generator, :books_generator
